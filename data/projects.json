@@ -1,0 +1,92 @@
+{
+	"projects": [
+		{
+			"title": "À l'instinct",
+			"image_src": "/assets/posters/a_l_instinct.jpg"
+		},
+		{
+			"title": "Aimons nous vivants",
+			"image_src": "/assets/posters/aimons_nous_vivants.jpg"
+		},
+		{
+			"title": "Cassandre",
+			"image_src": "/assets/posters/cassandre.jpg"
+		},
+		{
+			"title": "Contre toi",
+			"image_src": "/assets/posters/contre_toi.webp"
+		},
+		{
+			"title": "Coups de sang",
+			"image_src": "/assets/posters/coups_de_sang.jpg"
+		},
+		{
+			"title": "Enquete sur les trésors enfouis de Notre Dame",
+			"image_src": "/assets/posters/enquete_sur_les_tresors_enfouis_de_notre_dame.jpg"
+		},
+		{
+			"title": "E.V.A.A. Virtuoses du ciel",
+			"image_src": "/assets/posters/evaa_virtuoses_du_ciel.jpg"
+		},
+		{
+			"title": "Everest Green",
+			"image_src": "/assets/posters/everest_green.jpg"
+		},
+		{
+			"title": "Jamais sans mon psy",
+			"image_src": "/assets/posters/jamais_sans_mon_psy.webp"
+		},
+		{
+			"title": "Kamelott deuxième volet",
+			"image_src": "/assets/posters/kamelott_deuxieme_volet.jpg"
+		},
+		{
+			"title": "Kamelott",
+			"image_src": "/assets/posters/kamelott.jpg"
+		},
+		{
+			"title": "La croix",
+			"image_src": "/assets/posters/la_croix.jpg"
+		},
+		{
+			"title": "Les arènes",
+			"image_src": "/assets/posters/les_arenes.jpg"
+		},
+		{
+			"title": "Nexus VI",
+			"image_src": "/assets/posters/nexus_vi.jpg"
+		},
+		{
+			"title": "Notre Dame de Paris le chantier du siècle",
+			"image_src": "/assets/posters/notre_dame_de_paris_le_chantier_du_siecle.jpg"
+		},
+		{
+			"title": "Our brain plays tricks on us",
+			"image_src": "/assets/posters/our_brain_plays_tricks_on_us.jpg"
+		},
+		{
+			"title": "Outrage",
+			"image_src": "/assets/posters/outrage.jpg"
+		},
+		{
+			"title": "Reprise en main",
+			"image_src": "/assets/posters/reprise_en_main.jpg"
+		},
+		{
+			"title": "Science grand format",
+			"image_src": "/assets/posters/science_grand_format.jpg"
+		},
+		{
+			"title": "Sentinelle sud",
+			"image_src": "/assets/posters/sentinelle_sud.jpg"
+		},
+		{
+			"title": "Slalom",
+			"image_src": "/assets/posters/slalom.jpg"
+		},
+		{
+			"title": "Warning",
+			"image_src": "/assets/posters/warning.png"
+		}
+	]
+}
