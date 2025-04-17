@@ -31,11 +31,11 @@ export function HomePage() {
 			
 			}
 		}
-	});
+	}, []);
 
 	return (
 		<main className="app-homepage">
-			{/* <h1 className="app-homepage__title">hello world</h1> */}
+			
 		</main>
 	)
 }

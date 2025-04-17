@@ -10,3 +10,8 @@ body {
 	height: 100vh;
 	position: fixed;
 }
+
+@font-face {
+	font-family: "BlanditDisplay-Regular";
+	src: url("../../assets/fonts/BlanditDisplay-Regular.woff2");
+}

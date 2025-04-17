@@ -1,6 +1,7 @@
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, } from "react-router";
-
 import type { Route } from "./+types/root";
+
+import { HeaderComponent } from "./components/HeaderComponent";
 import "./styles/globals.css";
 
 
@@ -14,6 +15,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
+				<HeaderComponent />
 				{children}
 				<ScrollRestoration />
 				<Scripts />
@@ -44,11 +46,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	}
 
 	return (
-		<main className="pt-16 p-4 container mx-auto">
+		<main>
 			<h1>{message}</h1>
 			<p>{details}</p>
 			{stack && (
-				<pre className="w-full p-4 overflow-x-auto">
+				<pre>
 					<code>{stack}</code>
 				</pre>
 			)}
