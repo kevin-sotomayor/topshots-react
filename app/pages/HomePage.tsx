@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { useState, useEffect, } from "react";
 import "../styles/homepage.css";
 import data from "../../data/images.json";
@@ -54,6 +55,7 @@ export function HomePage() {
 
 			const scene = new THREE.Scene();
 			const camera = new THREE.PerspectiveCamera(50, appMain.clientWidth / appMain.clientHeight, 0.1, 1000);
+			const textureLoader = new THREE.TextureLoader();
 	
 			camera.position.set(0, 0, 1);
 			camera.lookAt(0, 0, 0);
@@ -69,23 +71,23 @@ export function HomePage() {
 			scene.background = new THREE.Color().setRGB(1., 1., 1.);
 	
 			renderer.setSize(appMain.clientWidth, appMain.clientHeight);
-			renderer.setPixelRatio(window.devicePixelRatio, 2);
+			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setAnimationLoop(renderLoop);
 	
 			const canvas = renderer.domElement;
 			appMain.appendChild(canvas);
 	
-			camera.position.z = 2;
+			camera.position.z = 5;
 	
 			// const controls = new OrbitControls(camera, canvas);
 			// controls.enableDamping = false;
 			// controls.autoRotate = false;
-	
-	
-			// const geometry = new THREE.BoxGeometry(1, 1, 1);
-			// const material = new THREE.MeshBasicMaterial({ color: 0x00aaff, wireframe: true });
-			// const cube = new THREE.Mesh(geometry, material);
-			// scene.add(cube);
+
+			const meshArray = [];
+			for (let i = 0; i < data.images.length; i++) {
+
+			}
+
 	
 			window.addEventListener("resize", () => {
 				camera.aspect = appMain.clientWidth / appMain.clientHeight;
