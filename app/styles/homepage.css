@@ -9,6 +9,10 @@
 	flex-direction: row;
 }
 
+.app-homepage canvas {
+	border: solid 1px black;
+}
+
 .app-homepage__image {
 	aspect-ratio: 16/9;
 	height: 33.33%;
