@@ -1,35 +1,32 @@
 import { useState, useEffect, useRef, } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import type { ThreeElements } from "@react-three/fiber";
+import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import data from "../../data/images.json";
 
 
-function RotatingCube() {
-	const meshRef = useRef<THREE.Mesh>(null);
-	useFrame(() => {
-		if (meshRef.current) {
-			meshRef.current.rotation.x += 0.01;
-			meshRef.current.rotation.y += 0.01;
-		}
-	});
+function Scene({}) {
+	const texture = useLoader(THREE.TextureLoader, "/assets/images/amerique_du_sud_temple.jpg");
 	return (
-		<mesh ref={meshRef}>
-			<boxGeometry args={[1, 1, 1]} />
-			<meshStandardMaterial color="blue" />
-		</mesh>
-	);
+		<>
+			<ambientLight intensity={1.5} color={"white"}/>
+			<mesh>
+				<planeGeometry args={[16, 9]}/>
+				<meshStandardMaterial map={texture} />
+			</mesh>
+		</>
+	)
 }
 
 export function HomePage() {
 	return (
 		<main className="app-homepage">
 			<Canvas>
-				<ambientLight intensity={0.5} />
-				<pointLight position={[10, 10, 10]} />
-				<RotatingCube />
+				<Scene />
+				{/* <OrbitControls /> */}
 			</Canvas>
 		</main>
 	)
