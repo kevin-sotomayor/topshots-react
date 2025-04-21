@@ -4,19 +4,8 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	overflow-x: hidden;
-	display: flex;
-	flex-direction: row;
 }
 
 .app-homepage canvas {
 	border: solid 1px black;
-}
-
-.app-homepage__image {
-	aspect-ratio: 16/9;
-	height: 33.33%;
-	width: auto;
-	object-fit: cover;
-	object-position: center;
 }

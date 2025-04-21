@@ -1,79 +1,27 @@
-{
-	"images": [
-		{
-			"img_url": "/assets/images/amerique_du_sud_temple.jpg"
-		},
-		{
-			"img_url": "/assets/images/athene_temple.jpg"
-		},
-		{
-			"img_url": "/assets/images/drone.jpg"
-		},
-		{
-			"img_url": "/assets/images/drone2.jpg"
-		},
-		{
-			"img_url": "/assets/images/equipe_drone_himalaya.jpg"
-		},
-		{
-			"img_url": "/assets/images/everest_base_camp_night.jpg"
-		},
-		{
-			"img_url": "/assets/images/everest_camp.jpg"
-		},
-		{
-			"img_url": "/assets/images/everest_mac.jpg"
-		},
-		{
-			"img_url": "/assets/images/everest_tournage.jpg"
-		},
-		{
-			"img_url": "/assets/images/indonesie_drone.jpg"
-		},
-		{
-			"img_url": "/assets/images/indonesie_ile_2.jpg"
-		},
-		{
-			"img_url": "/assets/images/indonesie_ile.jpg"
-		},
-		{
-			"img_url": "/assets/images/italie_montagne.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_desert_2.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_desert_photo.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_desert.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_marathon_des_sables.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_marathon.jpg"
-		},
-		{
-			"img_url": "/assets/images/maroc_marathon2.jpg"
-		},
-		{
-			"img_url": "/assets/images/nepal_temple.jpg"
-		},
-		{
-			"img_url": "/assets/images/no_title.jpg"
-		},
-		{
-			"img_url": "/assets/images/tournage_drone.jpg"
-		},
-		{
-			"img_url": "/assets/images/unknown_avion.jpg"
-		},
-		{
-			"img_url": "/assets/images/unknown_motos.jpg"
-		},
-		{
-			"img_url": "/assets/images/unknown_zodiac.jpg"
-		}
-	]
-}
+[
+	"/assets/images/amerique_du_sud_temple.jpg",
+	"/assets/images/athene_temple.jpg",
+	"/assets/images/drone.jpg",
+	"/assets/images/drone2.jpg",
+	"/assets/images/equipe_drone_himalaya.jpg",
+	"/assets/images/everest_base_camp_night.jpg",
+	"/assets/images/everest_camp.jpg",
+	"/assets/images/everest_mac.jpg",
+	"/assets/images/everest_tournage.jpg",
+	"/assets/images/indonesie_drone.jpg",
+	"/assets/images/indonesie_ile_2.jpg",
+	"/assets/images/indonesie_ile.jpg",
+	"/assets/images/italie_montagne.jpg",
+	"/assets/images/maroc_desert_2.jpg",
+	"/assets/images/maroc_desert_photo.jpg",
+	"/assets/images/maroc_desert.jpg",
+	"/assets/images/maroc_marathon_des_sables.jpg",
+	"/assets/images/maroc_marathon.jpg",
+	"/assets/images/maroc_marathon2.jpg",
+	"/assets/images/nepal_temple.jpg",
+	"/assets/images/no_title.jpg",
+	"/assets/images/tournage_drone.jpg",
+	"/assets/images/unknown_avion.jpg",
+	"/assets/images/unknown_motos.jpg",
+	"/assets/images/unknown_zodiac.jpg"
+]

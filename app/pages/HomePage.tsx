@@ -6,19 +6,24 @@ import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import data from "../../data/images.json";
-import { cameraPosition } from "three/tsl";
 
 
 function PhotoElement() {
-	const texture = useLoader(THREE.TextureLoader, "/assets/images/amerique_du_sud_temple.jpg");
-	const texture2 = useLoader(THREE.TextureLoader, "/assets/images/athene_temple.jpg");
+	const [photosData, setPhotosData] = useState<[] | string[]>([]);
 	const [photoDimensions, setPhotoDimensions] = useState<[number, number]>([0, 0]);
 	const [firstRowPosition, setfirstRowPosition] = useState<[number, number, number]>([0, 0, 0]);
-	const [photoPosition2, setPhotoPosition2] = useState<[number, number, number]>([0, 0, 0]);
-	const [firstRowOfPhotos, setFirstRowOfPhotos] = useState<number[][]>([]);
+
 	const cameraPosition = 5; // It is the default value
+	
+	const texture = useLoader(THREE.TextureLoader, "/assets/images/amerique_du_sud_temple.jpg");
+
+	// const [photoPosition2, setPhotoPosition2] = useState<[number, number, number]>([0, 0, 0]);
+	// const [firstRowOfPhotos, setFirstRowOfPhotos] = useState<number[][]>([]);
 
 	useEffect(() => {
+		if (!data) return;
+		setPhotosData(data);
+		
         const updateDimensions = () => {
 			const canvas = document.querySelector(".app-homepage__canvas");
 			if (!canvas) return;
@@ -30,7 +35,6 @@ function PhotoElement() {
 			const fovInRadians = (fov * Math.PI) / 180;
 
 			const visibleHeight = 2 * Math.tan(fovInRadians / 2) * cameraPosition;
-
 			const aspectRatio = canvasWidth / canvasHeight;
 			const visibleWidth = visibleHeight * aspectRatio;
 
@@ -42,6 +46,8 @@ function PhotoElement() {
 			const firstRowY = visibleHeight / 2 - photoHeight / 2;
 			setfirstRowPosition([firstRowX, firstRowY, 0]);
         };
+
+
 
         updateDimensions();
         window.addEventListener("resize", updateDimensions);
