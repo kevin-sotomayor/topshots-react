@@ -13,7 +13,7 @@ function PhotoElement() {
 	const texture = useLoader(THREE.TextureLoader, "/assets/images/amerique_du_sud_temple.jpg");
 	const texture2 = useLoader(THREE.TextureLoader, "/assets/images/athene_temple.jpg");
 	const [photoDimensions, setPhotoDimensions] = useState<[number, number]>([0, 0]);
-	const [photoPosition, setPhotoPosition] = useState<[number, number, number]>([0, 0, 0]);
+	const [firstRowPosition, setfirstRowPosition] = useState<[number, number, number]>([0, 0, 0]);
 	const [photoPosition2, setPhotoPosition2] = useState<[number, number, number]>([0, 0, 0]);
 	const [firstRowOfPhotos, setFirstRowOfPhotos] = useState<number[][]>([]);
 	const cameraPosition = 5; // It is the default value
@@ -38,9 +38,9 @@ function PhotoElement() {
 			const photoWidth = (16 / 9) * photoHeight;
 			setPhotoDimensions([photoWidth, photoHeight]);
 
-			const x = -visibleWidth / 2 + photoWidth / 2;
-			const y = visibleHeight / 2 - photoHeight / 2;
-			setPhotoPosition([x, y, 0]);
+			const firstRowX = -visibleWidth / 2 + photoWidth / 2;
+			const firstRowY = visibleHeight / 2 - photoHeight / 2;
+			setfirstRowPosition([firstRowX, firstRowY, 0]);
         };
 
         updateDimensions();
@@ -49,16 +49,12 @@ function PhotoElement() {
     }, [cameraPosition]);
 
 	return (
-		<>
-			<mesh position={photoPosition} >
+		<group position={new THREE.Vector3(firstRowPosition[0], firstRowPosition[1], 0)}>
+			<mesh>
 				<planeGeometry args={photoDimensions} />
 				<meshStandardMaterial map={texture} />
 			</mesh>
-			<mesh position={photoPosition2} >
-				<planeGeometry args={photoDimensions} />
-				<meshStandardMaterial map={texture2} />
-			</mesh>
-		</>
+		</group>
 	);
 }
 
