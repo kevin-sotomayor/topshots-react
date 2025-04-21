@@ -17,13 +17,18 @@ function PhotoElement() {
 	
 	const texture = useLoader(THREE.TextureLoader, "/assets/images/amerique_du_sud_temple.jpg");
 
+	function loadTexture(url: string) {
+		const texture = useLoader(THREE.TextureLoader, url);
+		return texture;
+	}
+
 	// const [photoPosition2, setPhotoPosition2] = useState<[number, number, number]>([0, 0, 0]);
 	// const [firstRowOfPhotos, setFirstRowOfPhotos] = useState<number[][]>([]);
 
 	useEffect(() => {
 		if (!data) return;
 		setPhotosData(data);
-		
+
         const updateDimensions = () => {
 			const canvas = document.querySelector(".app-homepage__canvas");
 			if (!canvas) return;
@@ -55,11 +60,20 @@ function PhotoElement() {
     }, [cameraPosition]);
 
 	return (
-		<group position={new THREE.Vector3(firstRowPosition[0], firstRowPosition[1], 0)}>
-			<mesh>
+		// <group position={new THREE.Vector3(firstRowPosition[0], firstRowPosition[1], 0)}>
+		<group>
+			{/* <mesh>
 				<planeGeometry args={photoDimensions} />
 				<meshStandardMaterial map={texture} />
-			</mesh>
+			</mesh> */}
+			{
+				photosData && photosData.map((imageUrl, index) => (
+      				<mesh key={index} position={new THREE.Vector3(firstRowPosition[0] + photoDimensions[0] * index, firstRowPosition[1], 0)}>
+        				<planeGeometry args={photoDimensions} />
+        				<meshStandardMaterial map={loadTexture(imageUrl)} />
+      				</mesh>
+    			))
+			}
 		</group>
 	);
 }
