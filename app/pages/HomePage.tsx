@@ -44,7 +44,7 @@ function PhotoElement() {
 			const aspectRatio = canvasWidth / canvasHeight;
 			const visibleWidth = visibleHeight * aspectRatio;
 			setCanvasFov([visibleWidth, visibleHeight]);
-			console.log(canvasFov);
+			console.log("canvas fov : ", canvasFov);
 
 			const photoHeight = visibleHeight / 4;
 			const photoWidth = (16 / 9) * photoHeight;
@@ -78,17 +78,14 @@ function PhotoElement() {
 		<group ref={groupRef} position={[0, firstRowPosition, 0]} >
 			{
 				photosData && photosData.map((imageUrl, index) => (
-					// photo dimensions = (2.072, 1.166)
-					// interval x = (-4.6, +4.6) and y = (-2.33, 2.33)
-					// TODO: use the dimensions to set up position 
-      				<mesh key={index} position={new THREE.Vector3((2.072 * index), 0, 0)}>
+      				<mesh key={index} position={new THREE.Vector3((-canvasFov[0] / 2 + photoDimensions[0] / 2 + photoDimensions[0] * index), 0, 0)}>
         				<planeGeometry args={photoDimensions} />
         				<meshStandardMaterial map={loadTexture(imageUrl)} />
       				</mesh>
     			))
 			}
 		</group>
-	);
+	)
 }
 
 export function HomePage() {
