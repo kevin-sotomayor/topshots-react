@@ -50,6 +50,8 @@ function PhotoElement() {
 			const photoWidth = (16 / 9) * photoHeight;
 			setPhotoDimensions([photoWidth, photoHeight]);
 
+			console.log("photo dimesions : ", photoDimensions);
+
 			const firstRowX = -visibleWidth / 2 + photoWidth / 2;
 			const firstRowY = visibleHeight / 2 - photoHeight / 2;
 			setfirstRowPosition(firstRowY);
@@ -73,11 +75,13 @@ function PhotoElement() {
 
 	return (
 		// <group position={new THREE.Vector3(firstRowPosition[0], firstRowPosition[1], 0)}>
-		<group ref={groupRef} position={[0, firstRowPosition, 0]}>
+		<group ref={groupRef} position={[0, firstRowPosition, 0]} >
 			{
 				photosData && photosData.map((imageUrl, index) => (
-					// think about another logic for the 'infinite scroll' animation
-      				<mesh key={index} position={}>
+					// photo dimensions = (2.072, 1.166)
+					// interval x = (-4.6, +4.6) and y = (-2.33, 2.33)
+					// TODO: use the dimensions to set up position 
+      				<mesh key={index} position={new THREE.Vector3((2.072 * index), 0, 0)}>
         				<planeGeometry args={photoDimensions} />
         				<meshStandardMaterial map={loadTexture(imageUrl)} />
       				</mesh>
