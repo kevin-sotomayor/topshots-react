@@ -11,13 +11,10 @@ import data from "../../data/images.json";
 function PhotoElement() {
 	const [photosData, setPhotosData] = useState<[] | string[]>([]);
 	const [photoDimensions, setPhotoDimensions] = useState<[number, number]>([0, 0]);
-	// const [firstRowPosition, setfirstRowPosition] = useState<[number, number, number]>([0, 0, 0]);
 	const [canvasFov, setCanvasFov] = useState<number[]>([0, 0]);
 	const [firstRowPosition, setfirstRowPosition] = useState<| number>(0);
 	const [vertexShader, setVertexShader] = useState<string>("");
 	const [fragmentShader, setFragmentShader] = useState<string>("");
-	const [hover, setHover] = useState(0);
-	const materialRef = useRef<THREE.ShaderMaterial>(null);
 
 	const cameraPosition = 5; // It is the default value
 
@@ -25,9 +22,6 @@ function PhotoElement() {
 		const texture = useLoader(THREE.TextureLoader, url);
 		return texture;
 	}
-
-	// const [photoPosition2, setPhotoPosition2] = useState<[number, number, number]>([0, 0, 0]);
-	// const [firstRowOfPhotos, setFirstRowOfPhotos] = useState<number[][]>([]);
 
 	useEffect(() => {
 		if (!data) return;
@@ -61,41 +55,34 @@ function PhotoElement() {
         };
 
 		const vertexShader = `
-  			varying vec2 vUv;
+			varying vec2 vUv;
 
   			void main() {
 				vUv = uv;
 				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   			}
 		`;
-
+		
 		const fragmentShader = `
 			varying vec2 vUv;
+			// uniform float uHover;
 			uniform sampler2D uTexture;
-			uniform float uHover;
 
 			void main() {
-				vec4 textureColor = texture2D(uTexture, vUv); // Récupère la couleur de la texture
-				vec3 alteredColor = mix(textureColor.rgb, textureColor.rgb * vec3(1.2, 0.9, 0.9), uHover); // Applique l'effet si uHover > 0
-				gl_FragColor = vec4(alteredColor, textureColor.a); // Applique la couleur altérée avec l'alpha d'origine
+				vec4 textureColor = texture2D(uTexture, vUv);
+				// vec3 alteredColor = mix(textureColor.rgb, textureColor.rgb * vec3(0., 0., 1.), uHover);
+				vec3 alteredColor = mix(textureColor.rgb, textureColor.rgb * vec3(0., 0., 1), 0.25);
+				gl_FragColor = vec4(alteredColor, textureColor.a); 
 			}
 		`;
 
-
 		setVertexShader(vertexShader);
 		setFragmentShader(fragmentShader);
-
 
         updateDimensions();
         window.addEventListener("resize", updateDimensions);
         return () => window.removeEventListener("resize", updateDimensions);
     }, [cameraPosition]);
-
-	useEffect(() => {
-        if (materialRef.current) {
-            materialRef.current.uniforms.uHover.value = hover;
-        }
-    }, [hover]);
 
 	return (
 		<group position={[0, firstRowPosition, 0]}>
@@ -106,17 +93,13 @@ function PhotoElement() {
 					<mesh 
 						key={index} 
 						position={[-canvasFov[0] / 2 + photoDimensions[0] / 2 + photoDimensions[0] * index, 0,0]} 
-						onPointerOver={() => setHover(1)}
-						onPointerOut={() => setHover(0)}
 					>
 						<planeGeometry args={photoDimensions} />
 						<shaderMaterial
-							ref = {materialRef}
 							vertexShader={vertexShader} 
 							fragmentShader={fragmentShader} 
 							uniforms={{ 
 								uTexture: { value: texture }, 
-								uHover: { value: hover },
 							}}
 							transparent = {true}
 						/>
