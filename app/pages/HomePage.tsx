@@ -1,46 +1,70 @@
 import type { ThreeElements, } from "@react-three/fiber";
 
-import { useState, useEffect, useRef, Suspense} from "react";
+import { useMemo, } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, useLoader, extend, } from "@react-three/fiber";
-import { PerspectiveCamera, OrbitControls, useVideoTexture, Plane, useTexture, SoftShadows} from "@react-three/drei";
+import { Canvas, useFrame, } from "@react-three/fiber";
+import { OrbitControls, useVideoTexture, Plane, } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import video from "../../assets/video.mp4";
-import img from "../../assets/images/amerique_du_sud_temple.jpg";
 
 
-function VideosShaderMaterial() {
-	
+function VideoShaderMaterial() {
+	const texture = useVideoTexture(video, {autoplay: true, start: true, loop: true});
+	const material = useMemo(() => {
+		return new THREE.ShaderMaterial({
+			uniforms: {
+				uTexture: { value: texture },
+				uTime: { value: 0.0 },
+			},
+			vertexShader: `
+				varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+			`,
+			fragmentShader: `
+				uniform sampler2D uTexture;
+				uniform float uTime;
+				varying vec2 vUv;
+
+				void main() {
+					vec2 uv = vUv;
+					uv.x += sin(uv.y * 10.0 + uTime) * 0.05; // Exemple d'effet ondulé
+					gl_FragColor = texture2D(uTexture, uv);
+				}
+			`,
+			
+		})
+	}, [texture])
+
+	useFrame(({ clock }) => {
+        if (material) {
+            material.uniforms.uTime.value = clock.getElapsedTime();
+        }
+    });
+
+	return (
+		<Plane args={[16, 9]}>
+			<primitive attach="material" object={material} />
+		</Plane>
+	)
 }
-
 
 function VideoMaterial() {
-	const texture = useVideoTexture(video, {autoplay: true, start: true, loop: true});
-	return (
-		<meshBasicMaterial side={THREE.DoubleSide} map={texture} />
-	)
+    return (
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 7.5] }}>
+			<VideoShaderMaterial />
+            <OrbitControls />
+        </Canvas>
+    );
 }
-
-function VideoElement() {
-	return (
-		<Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 7.5]}}>
-			<Plane args={[16, 9]}>
-				<VideoMaterial />
-			</Plane>
-			<ambientLight color={new THREE.Color(0xff0000)} intensity={2}/>
-			<OrbitControls />
-			<SoftShadows />
-		</Canvas>
-	)
-}
-
 
 export function HomePage() {
 	return (
 		<main className="app-homepage">
-			{/* <video src={video} autoPlay={true} loop={true} controls={true}/> */}
-			<VideoElement />
+			<VideoMaterial />
 		</main>
 	)
 }
