@@ -111,5 +111,5 @@ void main() {
         color = vec3(0.0); // Black grid lines
     }
 
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color , 1.0);
 }
