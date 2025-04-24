@@ -1,9 +1,9 @@
 import type { ThreeElements, } from "@react-three/fiber";
 
-import { useMemo, useState, } from "react";
+import { useMemo, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, } from "@react-three/fiber";
-import { OrbitControls, useVideoTexture, Plane, MeshReflectorMaterial, Lightformer, Sphere} from "@react-three/drei";
+import { OrbitControls, useVideoTexture, Plane, MeshReflectorMaterial, FirstPersonControls} from "@react-three/drei";
 
 import "../styles/homepage.css";
 import video from "../../assets/video.mp4";
@@ -67,13 +67,12 @@ function VideoMaterial() {
 			<VideoShaderMaterial />
 			<ReflectiveFloor />
 			<ambientLight intensity={0.5} color={new THREE.Color(1, 1, 1)}/>
-			<OrbitControls 
-                minPolarAngle={Math.PI / 2 - 0.05} // Limite inférieure (45°)
-                maxPolarAngle={Math.PI / 2 + 0.05} // Limite supérieure (90°)
-                minAzimuthAngle={-Math.PI / 60} // Limite gauche (-45°)
-                maxAzimuthAngle={Math.PI / 60} // Limite droite (45°)
-            />
-			</Canvas>
+			<FirstPersonControls 
+				movementSpeed={0} 
+				lookSpeed={0.005}
+
+			/>
+		</Canvas> 
     );
 }
 

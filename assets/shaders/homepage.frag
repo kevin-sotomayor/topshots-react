@@ -42,7 +42,7 @@ float blockyNoise(vec2 uv, float threshold, float scale, float seed) {
 }
 
 vec3 applyGlitchEffect(vec2 uv, vec3 originalColor, float seedOffset) {
-    float rgbIntensity = 0.1 + 0.1 * sin((uTime + seedOffset) * 3.);
+    float rgbIntensity = 0.1 + 0.1 * sin((uTime + seedOffset) * 5.0);
     // float displaceIntensity = 0.2 + 0.3 * pow(sin((uTime + seedOffset) * 1.2), 5.0);
 	float displaceIntensity = 0.1 * pow(sin((uTime + seedOffset) * 1.2), 5.0);
     float interlaceIntensity = 0.01;
