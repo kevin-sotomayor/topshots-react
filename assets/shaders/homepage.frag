@@ -42,7 +42,7 @@ float blockyNoise(vec2 uv, float threshold, float scale, float seed) {
 }
 
 vec3 applyGlitchEffect(vec2 uv, vec3 originalColor, float seedOffset) {
-    float rgbIntensity = 0.1 + 0.1 * sin((uTime + seedOffset) * 5.0);
+    float rgbIntensity = 0.1 + 0.3 * sin((uTime + seedOffset) * 5.0);
     // float displaceIntensity = 0.2 + 0.3 * pow(sin((uTime + seedOffset) * 1.2), 5.0);
 	float displaceIntensity = 0.1 * pow(sin((uTime + seedOffset) * 1.2), 5.0);
     float interlaceIntensity = 0.01;
@@ -53,8 +53,8 @@ vec3 applyGlitchEffect(vec2 uv, vec3 originalColor, float seedOffset) {
 
     uv.x += displace;
 
-    // vec2 offs = 0.1 * vec2(blockyNoise(uv.xy + vec2(uv.y, 0.0), rgbIntensity, 65.0, 341.0 + seedOffset), 0.0);
-	vec2 offs = 0.001 * vec2(blockyNoise(uv.xy + vec2(uv.y, 0.0), rgbIntensity, 65.0, 341.0 + seedOffset), 0.0); // Réduction du facteur
+    vec2 offs = 0.1 * vec2(blockyNoise(uv.xy + vec2(uv.y, 0.0), rgbIntensity, 65.0, 341.0 + seedOffset), 0.0);
+	// vec2 offs = 0.001 * vec2(blockyNoise(uv.xy + vec2(uv.y, 0.0), rgbIntensity, 65.0, 341.0 + seedOffset), 0.0); // Réduction du facteur
 
     float colr = texture2D(uTexture, uv - offs).r;
     float colg = texture2D(uTexture, uv).g;

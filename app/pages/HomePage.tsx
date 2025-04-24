@@ -69,8 +69,11 @@ function VideoMaterial() {
 			<ambientLight intensity={0.5} color={new THREE.Color(1, 1, 1)}/>
 			<FirstPersonControls 
 				movementSpeed={0} 
-				lookSpeed={0.005}
-
+				lookSpeed={0.002}
+				constrainVertical={true}
+				verticalMax={Math.PI / 2 - 0.05}
+				verticalMin={Math.PI / 2}
+				lookAt={0}
 			/>
 		</Canvas> 
     );
