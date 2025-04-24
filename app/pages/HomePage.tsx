@@ -11,13 +11,35 @@ import vertexShader from "../../assets/shaders/homepage.vert";
 import fragmentShader from "../../assets/shaders/homepage.frag";
 
 
+function createTextTexture(text: string, width: number, height: number): THREE.Texture {
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+
+    if (context) {
+        // Dessiner le texte
+        context.fillStyle = 'white';
+        context.font = '28px Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(text, width / 2, height / 2);
+    }
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
+}
+
 
 function VideoShaderMaterial() {
 	const texture = useVideoTexture(video, {autoplay: true, start: true, loop: true});
+	const textTexture = useMemo(() => createTextTexture('DRONE CINEMATOGRAPHY ', 512, 256), []);
 	const material = useMemo(() => {
 		return new THREE.ShaderMaterial({
 			uniforms: {
 				uTexture: { value: texture },
+				uTextTexture: { value: textTexture },
 				uTime: { value: 0.0 },
 				uResolution: { value: new THREE.Vector2(1920, 972) },
 			},
@@ -33,11 +55,9 @@ function VideoShaderMaterial() {
     });
 
 	return (
-		<>
-			<Plane args={[16, 9]} position={[0, 0, 0]}>
-				<primitive attach="material" object={material}/>
-			</Plane>
-		</>
+		<Plane args={[16, 9]} position={[0, 0, 0]}>
+			<primitive attach="material" object={material}/>
+		</Plane>
 	)
 }
 
@@ -69,7 +89,7 @@ function VideoMaterial() {
 			<ambientLight intensity={0.5} color={new THREE.Color(1, 1, 1)}/>
 			<FirstPersonControls 
 				movementSpeed={0} 
-				lookSpeed={0.002}
+				lookSpeed={0.005}
 				constrainVertical={true}
 				verticalMax={Math.PI / 2 - 0.05}
 				verticalMin={Math.PI / 2}

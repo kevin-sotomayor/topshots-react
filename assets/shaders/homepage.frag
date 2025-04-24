@@ -1,10 +1,12 @@
 uniform vec3 uResolution;
 uniform sampler2D uTexture;
+uniform sampler2D uTextTexture;
 uniform float uTime;
 varying vec2 vUv;
 
 float warp = 0.5;
 float scanlineIntensity = 0.25;
+
 
 float random(float x) {
     return fract(sin(x) * 43758.5453123);
@@ -95,12 +97,19 @@ void main() {
     vec2 randomCellIndex1 = randomCell(floor(uTime), 0.0);
     vec2 randomCellIndex2 = randomCell(floor(uTime), 10.0);
 
+    // Apply text texture to the top-right cell
+    if (cellIndex == vec2(2.0, 0.0)) {
+        vec3 textColor = vec3(1.0);
+        color = mix(color, textColor, step(0.01, texture2D(uTextTexture, (uv - vec2(2.0 / 3.0, 0.0)) * 3.0).r));
+    }
+
+    // Apply glitch effect to random cells
     if (cellIndex == randomCellIndex1) {
-        color = applyGlitchEffect(uv, color, 0.0);
+        color = applyGlitchEffect(uv, color, 2.0);
     }
 
     if (cellIndex == randomCellIndex2) {
-        color = applyGlitchEffect(uv, color, 2.0);
+        color = applyGlitchEffect(uv, color, .0);
     }
 
     // Grid
