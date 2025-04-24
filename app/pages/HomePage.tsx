@@ -3,7 +3,7 @@ import type { ThreeElements, } from "@react-three/fiber";
 import { useMemo, useState, } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, } from "@react-three/fiber";
-import { OrbitControls, useVideoTexture, Plane, MeshReflectorMaterial, useCursor, Text, Text3D, Center} from "@react-three/drei";
+import { OrbitControls, useVideoTexture, Plane, MeshReflectorMaterial, useCursor, Text, Text3D, Center, Wireframe, } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import video from "../../assets/video.mp4";
@@ -61,7 +61,7 @@ function ReflectiveFloor() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 1, 6] }}>
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0.5, 6.5] }}>
 			<VideoShaderMaterial />
 			<ReflectiveFloor />
 			{/* <OrbitControls /> */}
