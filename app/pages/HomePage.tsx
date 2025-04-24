@@ -41,14 +41,13 @@ function VideoShaderMaterial() {
 
 function ReflectiveFloor() {
 	return (
-        <Plane args={[16, 32]} rotation={[-Math.PI / 2, 0, 0]} position={[0, -4.5, 0]}>
+        <Plane args={[16, 9]} rotation={[-Math.PI / 2, 0, 0]} position={[0, -4.5, 0]}>
 			<MeshReflectorMaterial
-				blur={[0, 0]} // Blur ground reflections (width, height), 0 skips blur
 				mixBlur={1} // How much blur mixes with surface roughness (default = 1)
-				mixStrength={1} // Strength of the reflections
+				mixStrength={0.2} // Strength of the reflections
 				mixContrast={1} // Contrast of the reflections
 				resolution={1920} // Off-buffer resolution, lower=faster, higher=better quality, slower
-				mirror={0} // Mirror environment, 0 = texture colors, 1 = pick up env colors
+				mirror={1} // Mirror environment, 0 = texture colors, 1 = pick up env colors
 				depthScale={0} // Scale the depth factor (0 = no depth, default = 0)
 				minDepthThreshold={0.9} // Lower edge for the depthTexture interpolation (default = 0)
 				maxDepthThreshold={1} // Upper edge for the depthTexture interpolation (default = 0)
@@ -62,11 +61,11 @@ function ReflectiveFloor() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 6] }}>
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 1, 6] }}>
 			<VideoShaderMaterial />
 			<ReflectiveFloor />
-			<OrbitControls />
-			<ambientLight color={new THREE.Color(0, 0, 0)} intensity={1}/>
+			{/* <OrbitControls /> */}
+			<ambientLight color={new THREE.Color(1, 1, 1)} intensity={1}/>
         </Canvas>
     );
 }
