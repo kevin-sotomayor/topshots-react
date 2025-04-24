@@ -61,7 +61,7 @@ function ReflectiveFloor() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0.5, 6.5] }}>
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0.5, 6.75	] }}>
 			<VideoShaderMaterial />
 			<ReflectiveFloor />
 			{/* <OrbitControls /> */}
