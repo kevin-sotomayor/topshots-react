@@ -2,8 +2,8 @@ import type { ThreeElements, } from "@react-three/fiber";
 
 import { useMemo, useState, useEffect } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, } from "@react-three/fiber";
-import { OrbitControls, useVideoTexture, Plane, MeshReflectorMaterial, FirstPersonControls} from "@react-three/drei";
+import { Canvas, useFrame, extend, } from "@react-three/fiber";
+import { useVideoTexture, Plane, MeshReflectorMaterial, FirstPersonControls, OrbitControls, Sphere, SpotLight, } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import video from "../../assets/video.mp4";
@@ -61,6 +61,30 @@ function VideoShaderMaterial() {
 	)
 }
 
+function LeftWall() {
+	return (
+		<Plane args={[9, 9]} position={[-8, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.5, 0.5, 0.5)}/>
+		</Plane>
+	)
+}
+
+function RightWall() {
+	return (
+		<Plane args={[9, 9]} position={[8, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.5, 0.5, 0.5)}/>
+		</Plane>
+	)
+}
+
+function RoofTexture() {
+	return (
+		<Plane args={[16, 9]} position={[0, +4.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.5, 0.5, 0.5)}/>
+		</Plane>
+	)
+}
+
 function ReflectiveFloor() {
 	return (
         <Plane args={[16, 9]} rotation={[-Math.PI / 2, 0, 0]} position={[0, -4.5, 0]}>
@@ -85,18 +109,21 @@ function VideoMaterial() {
     return (
         <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 7] }} gl={{antialias: true}} >
 			<VideoShaderMaterial />
+			<LeftWall />
+			<RightWall />
 			<ReflectiveFloor />
-			<ambientLight intensity={0.5} color={new THREE.Color(1, 1, 1)}/>
-			<FirstPersonControls 
-				movementSpeed={0} 
-				lookSpeed={0.005}
-				constrainVertical={true}
-				verticalMax={Math.PI / 2 - 0.05}
-				verticalMin={Math.PI / 2}
-				lookAt={0}
-			/>
+			<RoofTexture />
+			{/* <ambientLight intensity={0.5} color={new THREE.Color(1, 1, 1)}/> */}
+			<pointLight
+                position={[0, 0, -2]}
+                intensity={5}
+                distance={100}
+                decay={0.5}
+                color={new THREE.Color(0.5, 0, 0.5)}
+            />
+			<FirstPersonControls activeLook={false}/>
 		</Canvas> 
-    );
+    )
 }
 
 export function HomePage() {
