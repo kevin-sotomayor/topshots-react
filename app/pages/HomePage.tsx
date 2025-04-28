@@ -33,20 +33,16 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
 
 function CustomPlane({ args, position, children }: { args: number[]; position: number[]; children?: React.ReactNode }) {
     const geometry = useMemo(() => {
-        const planeGeometry = new THREE.PlaneGeometry(16, 9, 32, 32); // 32 segments pour plus de flexibilité
+        const planeGeometry = new THREE.PlaneGeometry(16, 9, 32, 32);
         const { position } = planeGeometry.attributes;
 
-        // Modifier les sommets pour courber les côtés verticaux
         for (let i = 0; i < position.count; i++) {
+            const x = position.getX(i);
             const y = position.getY(i);
-            const z = position.getZ(i);
-
-            // Appliquer une courbure en fonction de la position verticale
-            const curveFactor = Math.sin((y / 9) * Math.PI); // Ajustez la courbure ici
-            position.setZ(i, z + curveFactor * 2); // Courbure vers l'extérieur
+			// TODO: CRT curve
         }
 
-        position.needsUpdate = true; // Indiquer que les sommets ont changé
+        position.needsUpdate = true;
         return planeGeometry;
     }, []);
 
