@@ -4,8 +4,6 @@ uniform sampler2D uTextTexture;
 uniform float uTime;
 varying vec2 vUv;
 
-float warp = 0.5;
-float scanlineIntensity = 0.25;
 
 
 float random(float x) {
@@ -74,23 +72,27 @@ void main() {
     // Normalized pixel coordinates (from 0 to 1) and center them
     vec2 uv = vUv;
     vec2 centeredUv = uv - 0.5;
+	float warp = 0.25;
+	float scanlineIntensity = 0.1;
 
     // Apply CRT curvature effect
-    float curvature = warp * (centeredUv.x * centeredUv.x + centeredUv.y * centeredUv.y);
-    centeredUv *= 1.0 + curvature;
-    uv = centeredUv + 0.5;
+    // float curvature = warp * (centeredUv.x * centeredUv.x + centeredUv.y * centeredUv.y);
+    // centeredUv *= 1.0 + curvature;
+    // uv = centeredUv + 0.5;
 
     // Check if UV coordinates are out of bounds
-    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
-        gl_FragColor = vec4(0.01, 0.01, 0.01, 1.0);
-        return;
-    }
+	// if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
+	// 	discard;
+	// }
 
     vec3 color = texture2D(uTexture, uv).rgb;
+
 
     // Scanline effect
     float scanline = sin(uv.y * uResolution.y * 3.14159) * scanlineIntensity;
     color *= 1.0 - scanline;
+
+	// Glitch
 
     // Determine the current cell index
     vec2 cellIndex = floor(uv * 3.0);
@@ -117,7 +119,7 @@ void main() {
     vec2 gridUv = fract(uv * 3.0);
     if (gridUv.x < gridThickness || gridUv.y < gridThickness || 
         gridUv.x > 1.0 - gridThickness || gridUv.y > 1.0 - gridThickness) {
-        color = vec3(0.0); // Black grid lines
+        color = vec3(0.0);
     }
 
     gl_FragColor = vec4(color , 1.0);
