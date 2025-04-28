@@ -20,7 +20,7 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
     if (context) {
         // Dessiner le texte
         context.fillStyle = 'white';
-        context.font = '28px Arial';
+        context.font = '24px Arial';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillText(text, width / 2, height / 2);
@@ -33,14 +33,13 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
 
 function CustomPlane({ args, position, children }: { args: number[]; position: number[]; children?: React.ReactNode }) {
     const geometry = useMemo(() => {
-        const planeGeometry = new THREE.PlaneGeometry(16, 9, 32, 32);
+        const planeGeometry = new THREE.PlaneGeometry(16, 9, 2, 2);
         const { position } = planeGeometry.attributes;
 
         for (let i = 0; i < position.count; i++) {
-            const x = position.getX(i);
-            const y = position.getY(i);
-			// TODO: CRT curve
-        }
+			// TODO: CRT TV curve
+			
+		}
 
         position.needsUpdate = true;
         return planeGeometry;
@@ -67,13 +66,15 @@ function VideoShaderMaterial() {
 			},
 			vertexShader: vertexShader,
 			fragmentShader: fragmentShader,
+			transparent: true,
+			blending: THREE.NormalBlending,
 		})
 	}, [texture])
 
 	useFrame(({ clock }) => {
         if (shader) {
             shader.uniforms.uTime.value = clock.getElapsedTime();
-			// add the resolution handler
+			// add the resolution handler to the memo
         }
     });
 
@@ -118,7 +119,7 @@ function FloorTexture() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 10] }} gl={{antialias: true}} >
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 10] }} gl={{ antialias: true, alpha: true, }} >
 			<VideoShaderMaterial />
 			<RoofTexture />
 			<RightWall />
