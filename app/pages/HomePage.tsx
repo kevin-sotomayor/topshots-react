@@ -3,7 +3,7 @@ import type { ThreeElements, } from "@react-three/fiber";
 import { useMemo, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, extend, } from "@react-three/fiber";
-import { useVideoTexture, Plane, MeshReflectorMaterial, FirstPersonControls, OrbitControls, Sphere, SpotLight, shaderMaterial} from "@react-three/drei";
+import { useVideoTexture, Plane, MeshReflectorMaterial, FirstPersonControls, OrbitControls, Sphere, SpotLight, shaderMaterial, Shadow, } from "@react-three/drei";
 
 import "../styles/homepage.css";
 import videoSrc from "../../assets/video.mp4";
@@ -18,7 +18,6 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
     const context = canvas.getContext('2d');
 
     if (context) {
-        // Dessiner le texte
         context.fillStyle = 'white';
         context.font = '24px Arial';
         context.textAlign = 'center';
@@ -112,7 +111,7 @@ function ShaderMaterial() {
 
 	return (
 		<TvShape args={[16, 9]} position={[0, 0, 0]} >
-			<primitive object={shader} attach="material" />
+			<primitive object={shader} attach="material"/>
 		</TvShape>
 	)
 }
@@ -151,14 +150,13 @@ function FloorTexture() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 8] }} gl={{ antialias: true, alpha: true, }} >
+        <Canvas className="app-homepage__canvas" camera={{ position: [0,-0.1, 10] }} gl={{ antialias: true, alpha: true, }}>
 			<ShaderMaterial />
 			<RoofTexture />
 			<RightWall />
 			<FloorTexture />
 			<LeftWall />
 			<ambientLight intensity={1.0} color={new THREE.Color(1, 1, 1)}/>
-			{/* <FirstPersonControls activeLook={false}/> */}
 			<OrbitControls />
 		</Canvas>
     )
