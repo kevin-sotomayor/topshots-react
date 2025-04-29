@@ -33,17 +33,35 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
 
 function CustomPlane({ args, position, children }: { args: number[]; position: number[]; children?: React.ReactNode }) {
     const geometry = useMemo(() => {
-        const planeGeometry = new THREE.PlaneGeometry(16, 9, 2, 2);
-        const { position } = planeGeometry.attributes;
 
-        for (let i = 0; i < position.count; i++) {
-			// TODO: CRT TV curve
-			
-		}
+		// const customGeometry = new THREE.BufferGeometry();
+		// const positions = [];
+		// const normals = [];
+		// const uvs = [];
+		// const vertices = [
+		// 	{ pos: [-8, -4.5,  0], norm: [ 0,  0,  1], uv: [0, 0], },
+		// 	{ pos: [ 8, -4.5,  0], norm: [ 0,  0,  1], uv: [1, 0], },
+		// 	{ pos: [-8,  4.5,  0], norm: [ 0,  0,  1], uv: [0, 1], },
 
-        position.needsUpdate = true;
-        return planeGeometry;
-    }, []);
+		// 	{ pos: [-8,  4.5,  0], norm: [ 0,  0,  1], uv: [0, 1], },
+		// 	{ pos: [ 8, -4.5,  0], norm: [ 0,  0,  1], uv: [1, 0], },
+		// 	{ pos: [ 8,  4.5,  0], norm: [ 0,  0,  1], uv: [1, 1], },
+		// ];
+		// for (const vertex of vertices) {
+		// 	positions.push(...vertex.pos);
+		// 	normals.push(...vertex.norm);
+		// 	uvs.push(...vertex.uv);
+		// }
+
+		// customGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(positions), 3));
+		// customGeometry.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(normals), 3));
+		// customGeometry.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(uvs), 2));
+
+		// return customGeometry;
+
+	}, []);
+
+
 
     return (
         <mesh geometry={geometry}>
@@ -119,7 +137,7 @@ function FloorTexture() {
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 10] }} gl={{ antialias: true, alpha: true, }} >
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 6.5] }} gl={{ antialias: true, alpha: true, }} >
 			<VideoShaderMaterial />
 			<RoofTexture />
 			<RightWall />
