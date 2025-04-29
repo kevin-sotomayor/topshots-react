@@ -31,47 +31,61 @@ function createTextTexture(text: string, width: number, height: number): THREE.T
     return texture;
 }
 
-function CustomPlane({ args, position, children }: { args: number[]; position: number[]; children?: React.ReactNode }) {
+function TvShape({ args, position, children }: { args: number[]; position: number[]; children?: React.ReactNode }) {
     const geometry = useMemo(() => {
+		const x = 0, y = 0;
+		const tvShape = new THREE.Shape();
 
-		// const customGeometry = new THREE.BufferGeometry();
-		// const positions = [];
-		// const normals = [];
-		// const uvs = [];
-		// const vertices = [
-		// 	{ pos: [-8, -4.5,  0], norm: [ 0,  0,  1], uv: [0, 0], },
-		// 	{ pos: [ 8, -4.5,  0], norm: [ 0,  0,  1], uv: [1, 0], },
-		// 	{ pos: [-8,  4.5,  0], norm: [ 0,  0,  1], uv: [0, 1], },
+		tvShape.moveTo(x - 8, y - 4.5);
+		tvShape.bezierCurveTo(
+			x - 8, y - 4.5,
+			x - 0, y - 6,
+			x + 8, y - 4.5,
+		);
+		tvShape.bezierCurveTo(
+			x + 8, y - 4.5,
+			x + 9.5, y + 0,
+			x + 8, y + 4.5,
+		);
+		tvShape.bezierCurveTo(
+			x + 8, y + 4.5,
+			x - 0, y + 6,
+			x - 8, y + 4.5,
+		);
+		tvShape.bezierCurveTo(
+			x - 8, y + 4.5,
+			x - 9.5, y - 0,
+			x - 8, y - 4.5,
+		);
+		tvShape.lineTo(x - 8, y - 4.5);
 
-		// 	{ pos: [-8,  4.5,  0], norm: [ 0,  0,  1], uv: [0, 1], },
-		// 	{ pos: [ 8, -4.5,  0], norm: [ 0,  0,  1], uv: [1, 0], },
-		// 	{ pos: [ 8,  4.5,  0], norm: [ 0,  0,  1], uv: [1, 1], },
-		// ];
-		// for (const vertex of vertices) {
-		// 	positions.push(...vertex.pos);
-		// 	normals.push(...vertex.norm);
-		// 	uvs.push(...vertex.uv);
-		// }
+		const geometry = new THREE.ShapeGeometry(tvShape);
+		geometry.computeBoundingBox();
+		const { min, max } = geometry.boundingBox!;
+		const uvAttribute = new Float32Array(geometry.attributes.position.count * 2);
 
-		// customGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(positions), 3));
-		// customGeometry.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(normals), 3));
-		// customGeometry.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(uvs), 2));
+		for (let i = 0; i < geometry.attributes.position.count; i++) {
+            const x = geometry.attributes.position.getX(i);
+            const y = geometry.attributes.position.getY(i);
 
-		// return customGeometry;
+            uvAttribute[i * 2] = (x - min.x) / (max.x - min.x); // U
+            uvAttribute[i * 2 + 1] = (y - min.y) / (max.y - min.y); // V
+        }
 
+		geometry.setAttribute('uv', new THREE.BufferAttribute(uvAttribute, 2));
+
+		return geometry;
 	}, []);
 
-
-
     return (
-        <mesh geometry={geometry}>
+        <mesh geometry={geometry} position={position}>
             {children}
         </mesh>
     );
 }
 
 
-function VideoShaderMaterial() {
+function ShaderMaterial() {
 	const texture = useVideoTexture(videoSrc, {autoplay: true, start: true, loop: true});
 	const textTexture = useMemo(() => createTextTexture('DRONE CINEMATOGRAPHY ', 512, 256), []);
 	const shader = useMemo(() => {
@@ -97,48 +111,48 @@ function VideoShaderMaterial() {
     });
 
 	return (
-		<CustomPlane args={[16, 9]} position={[0, 0, 2.5]} >
+		<TvShape args={[16, 9]} position={[0, 0, 0]} >
 			<primitive object={shader} attach="material" />
-		</CustomPlane>
+		</TvShape>
 	)
 }
 
 function LeftWall() {
 	return (
-		<Plane args={[50, 9]} position={[-8, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-			<meshStandardMaterial color={new THREE.Color(0, 0, 1)}/>
+		<Plane args={[64, 14]} position={[-12, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.25, 0.25, 0.25)}/>
 		</Plane>
 	)
 }
 
 function RightWall() {
 	return (
-		<Plane args={[50, 9]} position={[8, 0, 0]} rotation={[0, -Math.PI / 2, 0]} setRotationFromAxisAngle={Math.PI / 2}>
-			<meshStandardMaterial color={new THREE.Color(0, 0, 1)}/>
+		<Plane args={[64, 14]} position={[12, 0, 0]} rotation={[0, -Math.PI / 2, 0]} setRotationFromAxisAngle={Math.PI / 2}>
+			<meshStandardMaterial color={new THREE.Color(0.25, 0.25, 0.25)}/>
 		</Plane>
 	)
 }
 
 function RoofTexture() {
 	return (
-		<Plane args={[16, 50]} position={[0, +4.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-			<meshStandardMaterial color={new THREE.Color(1.0, 0.0, 0.0)}/>
+		<Plane args={[24, 64]} position={[0, 6, 0]} rotation={[Math.PI / 2, 0, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.1, 0.1, 0.1)}/>
 		</Plane>
 	)
 }
 
 function FloorTexture() {
 	return (
-		<Plane args={[16, 50]} position={[0, -4.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-			<meshStandardMaterial color={new THREE.Color(1.0, 0.0, 0.0)}/>
+		<Plane args={[24, 64]} position={[0, -6, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+			<meshStandardMaterial color={new THREE.Color(0.1, 0.1, 0.1)}/>
 		</Plane>
 	)
 }
 
 function VideoMaterial() {
     return (
-        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 6.5] }} gl={{ antialias: true, alpha: true, }} >
-			<VideoShaderMaterial />
+        <Canvas className="app-homepage__canvas" camera={{ position: [0, 0, 8] }} gl={{ antialias: true, alpha: true, }} >
+			<ShaderMaterial />
 			<RoofTexture />
 			<RightWall />
 			<FloorTexture />
